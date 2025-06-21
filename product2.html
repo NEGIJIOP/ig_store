@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Remote-Controlled Robotic Arm Kit</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .product-page {
+      padding: 2rem;
+      max-width: 1000px;
+      margin: auto;
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .product-page img {
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .product-info {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .product-info h1 {
+      margin-bottom: 1rem;
+    }
+
+    .product-info ul {
+      margin: 1rem 0;
+      padding-left: 1.2rem;
+    }
+
+    .product-info button {
+      margin: 0.5rem 0.5rem 0 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>IG_Store</h1>
+    <a href="cart.html" class="cart" style="text-decoration: none; color: inherit;">
+  🛒 Cart (<span id="cart-count">0</span>)
+</a>
+  </header>
+
+  <main class="product-page">
+    <img src="images/product2.jpg" alt="ESP32-S3">
+
+    <div class="product-info">
+      <h1>Remote-Controlled Robotic Arm Kit</h1>
+      <h2>₹2499</h2>
+
+      <ul>
+        <li>Dimensions - 15x9x6.3inch</li>
+        <li>Wired Control</li>
+        <li>[Screws,Nuts,etc included]</li>
+        <li></li>
+        <li></li>
+      </ul>
+
+      <button onclick="addToCart()">Add to Cart</button>
+      <button onclick="alert('Thank you for buying!')">Buy Now</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 IG_Store. All rights reserved.</p>
+  </footer>
+
+  <script>
+    let cartCount = 0;
+    function addToCart() {
+      cartCount++;
+      document.getElementById("cart-count").textContent = cartCount;
+      alert("Product added to cart!");
+    }
+  </script>
+
+</body>
+</html>

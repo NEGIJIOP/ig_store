@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>IG_Store - Best Deals</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>IG_Store</h1>
+    <a href="cart.html" class="cart" style="text-decoration: none; color: inherit;">
+  🛒 Cart (<span id="cart-count">0</span>)
+</a>
+  </header>
+
+  <!-- Banner Section -->
+  <section id="banner">
+    <img src="images/banner.jpg" alt="Best Deals Banner">
+  </section>
+
+  <!-- Filter Section -->
+  <section id="filters">
+    <input type="text" id="search" placeholder="Search by name...">
+    <label for="price-filter">Max Price: ₹<span id="price-value">50000</span></label>
+    <input type="range" id="price-filter" min="0" max="50000" step="1000" value="50000">
+  </section>
+
+  <!-- Products Section -->
+  <main id="product-list">
+    <!-- Product cards will be injected by script.js -->
+  </main>
+
+  <footer>
+    <p>&copy; 2025 IG_Store. All rights reserved.</p>
+  </footer>
+
+  <!-- JavaScript to load and display products -->
+  <script>
+    const products = [
+      {
+        id: 1,
+        name: "ESP32-S3 1.8inch AMOLED SMARTWATCH",
+        price: 4999,
+        image: "images/product1.jpg",
+        page: "product1.html"
+      },
+      {
+        id: 2,
+        name: "Remote-Controlled Robotic Arm Kit",
+        price: 2499,
+        image: "images/product2.jpg",
+        page: "product2.html"
+      },
+      {
+        id: 3,
+        name: "17 DOF Bipedal Humanoid Robot",
+        price: 17999,
+        image: "images/product3.jpg",
+        page: "product3.html"
+      },
+      {
+        id: 4,
+        name: "Maglev : Magnetic Levitating Pen by BeCre8v",
+        price: 399,
+        image: "images/product4.jpg",
+        page: "product4.html"
+      },
+      {
+        id: 5,
+        name: "BeagleBone Black REV C",
+        price: 6500,
+        image: "images/product5.jpg",
+        page: "product5.html"
+      },
+      {
+        id: 6,
+        name: "360° Rotating Ball Boomerang Mini Pro Spinner Blastoise Toys",
+        price: 449,
+        image: "images/product6.jpg",
+        page: "product6.html"
+      },
+      {
+        id: 7,
+        name: "LEGO 9686 Simple and Powered Machine Set",
+        price: 34999,
+        image: "images/product7.jpg",
+        page: "product7.html"
+      }
+    ];
+
+    let cart = [];
+
+    function updateCartCount() {
+      document.getElementById("cart-count").textContent = cart.length;
+    }
+
+    function displayProducts() {
+      const productList = document.getElementById("product-list");
+      const search = document.getElementById("search").value.toLowerCase();
+      const maxPrice = parseInt(document.getElementById("price-filter").value);
+
+      productList.innerHTML = "";
+
+      const filtered = products.filter(p =>
+        p.name.toLowerCase().includes(search) && p.price <= maxPrice
+      );
+
+      for (const product of filtered) {
+        const card = document.createElement("div");
+        card.className = "product-card";
+        card.innerHTML = `
+          <a href="${product.page}" style="text-decoration:none; color:inherit;">
+            <img src="${product.image}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p>₹${product.price}</p>
+          </a>
+          <button onclick="addToCart(${product.id})">Add to Cart</button>
+          <a href="${product.page}"><button>Buy Now</button></a>
+        `;
+        productList.appendChild(card);
+      }
+    }
+
+    function addToCart(productId) {
+      const product = products.find(p => p.id === productId);
+      if (product) {
+        cart.push(product);
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        updateCartCount();
+        alert(`${product.name} added to cart!`);
+      }
+    }
+
+    // Event Listeners
+    document.getElementById("search").addEventListener("input", displayProducts);
+    document.getElementById("price-filter").addEventListener("input", () => {
+      document.getElementById("price-value").textContent =
+        document.getElementById("price-filter").value;
+      displayProducts();
+    });
+
+    // Initial load
+    window.onload = function () {
+      updateCartCount();
+      displayProducts();
+    };
+  </script>
+
+</body>
+</html>

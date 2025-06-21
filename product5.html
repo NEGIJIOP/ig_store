@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BeagleBone Black REV C</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .product-page {
+      padding: 2rem;
+      max-width: 1000px;
+      margin: auto;
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .product-page img {
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .product-info {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .product-info h1 {
+      margin-bottom: 1rem;
+    }
+
+    .product-info ul {
+      margin: 1rem 0;
+      padding-left: 1.2rem;
+    }
+
+    .product-info button {
+      margin: 0.5rem 0.5rem 0 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>IG_Store</h1>
+    <a href="cart.html" class="cart" style="text-decoration: none; color: inherit;">
+  🛒 Cart (<span id="cart-count">0</span>)
+</a>
+  </header>
+
+  <main class="product-page">
+    <img src="images/product5.jpg" alt="ESP32-S3">
+
+    <div class="product-info">
+      <h1>BeagleBone Black REV C</h1>
+      <h2>₹6500</h2>
+
+      <ul>
+        <li>This model includes 4GB of eMMC built-in storage instead of the Rev B’s 2GB. With the doubled storage and faster eMMC, the developers were able to make the Rev C’s most significant change: shipping the BeagleBone Black with Debian Linux pre-loaded on the board’s flash instead of Angstrom Linux</li>
+        <li>Connectivity :
+              ->USB client for power & communications
+              ->USB host
+              ->Ethernet
+              ->HDMI
+              ->2x 46 pin headers</li>
+        <li>Onboard storage frees up the microSD card slot for greater expansion</li>
+        <li>More and faster memory now with 512MB DDR3L 400MHz SDRAM, 4GB eMMC Memory</li>
+        <li>Sitara AM3358BZCZ100 ARM Cortex-A8 32-Bit RISC microprocessor, up to 1GHz</li>
+      </ul>
+
+      <button onclick="addToCart()">Add to Cart</button>
+      <button onclick="alert('Thank you for buying!')">Buy Now</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 IG_Store. All rights reserved.</p>
+  </footer>
+
+  <script>
+    let cartCount = 0;
+    function addToCart() {
+      cartCount++;
+      document.getElementById("cart-count").textContent = cartCount;
+      alert("Product added to cart!");
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>360° Rotating Ball Boomerang Mini Pro Spinner Blastoise Toys</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .product-page {
+      padding: 2rem;
+      max-width: 1000px;
+      margin: auto;
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .product-page img {
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .product-info {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .product-info h1 {
+      margin-bottom: 1rem;
+    }
+
+    .product-info ul {
+      margin: 1rem 0;
+      padding-left: 1.2rem;
+    }
+
+    .product-info button {
+      margin: 0.5rem 0.5rem 0 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>IG_Store</h1>
+    <a href="cart.html" class="cart" style="text-decoration: none; color: inherit;">
+  🛒 Cart (<span id="cart-count">0</span>)
+</a>
+  </header>
+
+  <main class="product-page">
+    <img src="images/product6.jpg" alt="ESP32-S3">
+
+    <div class="product-info">
+      <h1>360° Rotating Ball Boomerang Mini Pro Spinner Blastoise Toys</h1>
+      <h2>₹449</h2>
+
+      <ul>
+        <li>This product contains a non - replaceable battery. Please do not disassemble it or let the battery get damp.</li>
+        <li>Please avoid strong impact and exposure to direct sunlight.</li>
+        <li>Keep away from flammable and explosive materials when charging.</li>
+        <li>Before playing flying light up ball, please fully charge and keep the top up.</li>
+        <li>Don't play with mini light spinner in bad weather such as rain, snow, thunder, electricity and strong wind, so as to avoid injury or damage to the product</li>
+      </ul>
+
+      <button onclick="addToCart()">Add to Cart</button>
+      <button onclick="alert('Thank you for buying!')">Buy Now</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 IG_Store. All rights reserved.</p>
+  </footer>
+
+  <script>
+    let cartCount = 0;
+    function addToCart() {
+      cartCount++;
+      document.getElementById("cart-count").textContent = cartCount;
+      alert("Product added to cart!");
+    }
+  </script>
+
+</body>
+</html>
