@@ -1,18 +1,19 @@
-// Sample product data
 const products = [
   {
     id: 1,
     name: "Smartphone X",
     price: 24999,
     image: "images/product1.jpg",
-    page: "product1.html"
+    page: "product1.html",
+    deal: true
   },
   {
     id: 2,
     name: "Wireless Earbuds",
     price: 2999,
     image: "images/product2.jpg",
-    page: "product2.html"
+    page: "product2.html",
+    deal: true
   },
   {
     id: 3,
@@ -33,7 +34,8 @@ const products = [
     name: "Bluetooth Speaker",
     price: 1999,
     image: "images/product5.jpg",
-    page: "product5.html"
+    page: "product5.html",
+    deal: true
   },
   {
     id: 6,
@@ -54,18 +56,26 @@ const products = [
 let cart = [];
 
 function updateCartCount() {
+  cart = JSON.parse(localStorage.getItem("cart")) || [];
   document.getElementById("cart-count").textContent = cart.length;
+}
+
+function addToCart(productId) {
+  const product = products.find(p => p.id === productId);
+  if (product) {
+    cart.push(product);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateCartCount();
+    alert(`${product.name} added to cart!`);
+  }
 }
 
 function displayProducts() {
   const productList = document.getElementById("product-list");
   const search = document.getElementById("search").value.toLowerCase();
   const maxPrice = parseInt(document.getElementById("price-filter").value);
-
-  // Clear product list
   productList.innerHTML = "";
 
-  // Filter and display products
   const filtered = products.filter(p =>
     p.name.toLowerCase().includes(search) && p.price <= maxPrice
   );
@@ -74,9 +84,11 @@ function displayProducts() {
     const card = document.createElement("div");
     card.className = "product-card";
     card.innerHTML = `
-      <img src="${product.image}" alt="${product.name}">
-      <h3>${product.name}</h3>
-      <p>₹${product.price}</p>
+      <a href="${product.page}" style="text-decoration:none; color:inherit;">
+        <img src="${product.image}" alt="${product.name}">
+        <h3>${product.name}</h3>
+        <p>₹${product.price}</p>
+      </a>
       <button onclick="addToCart(${product.id})">Add to Cart</button>
       <a href="${product.page}"><button>Buy Now</button></a>
     `;
@@ -84,27 +96,59 @@ function displayProducts() {
   }
 }
 
-function addToCart(productId) {
-  const product = products.find(p => p.id === productId);
-  if (product) {
-    cart.push(product);
-    localStorage.setItem("cart", JSON.stringify(cart));
+function displayBestDeals() {
+  const dealList = document.getElementById("deal-list");
+  if (!dealList) return; // skip if section isn't present
+  const deals = products.filter(p => p.deal);
 
-    updateCartCount();
-    alert(`${product.name} added to cart!`);
-  }
+  dealList.innerHTML = deals.map(product => `
+    <div class="product-card">
+      <a href="${product.page}">
+        <img src="${product.image}" alt="${product.name}">
+        <h3>${product.name}</h3>
+        <p>₹${product.price}</p>
+      </a>
+    </div>
+  `).join('');
+}
+
+function updateSuggestions() {
+  const searchInput = document.getElementById("search");
+  const suggestions = document.getElementById("suggestions");
+  const value = searchInput.value.toLowerCase();
+
+  suggestions.innerHTML = "";
+
+  if (value === "") return;
+
+  const matches = products.filter(p => p.name.toLowerCase().includes(value)).slice(0, 5);
+  matches.forEach(p => {
+    const li = document.createElement("li");
+    li.textContent = p.name;
+    li.onclick = () => {
+      searchInput.value = p.name;
+      suggestions.innerHTML = "";
+      displayProducts();
+    };
+    suggestions.appendChild(li);
+  });
 }
 
 // Event Listeners
-document.getElementById("search").addEventListener("input", displayProducts);
+document.getElementById("search").addEventListener("input", () => {
+  updateSuggestions();
+  displayProducts();
+});
+
 document.getElementById("price-filter").addEventListener("input", () => {
   document.getElementById("price-value").textContent =
     document.getElementById("price-filter").value;
   displayProducts();
 });
 
-// Initial load
-window.onload = function () {
+// Load on start
+window.onload = () => {
   updateCartCount();
   displayProducts();
+  displayBestDeals();
 };

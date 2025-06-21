@@ -1,42 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>IG_Store - Best Deals</title>
-  <link rel="icon" type="image/png" href="favicon.png">
-  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
   <header>
     <h1>IG_Store</h1>
     <a href="cart.html" class="cart" style="text-decoration: none; color: inherit;">
-  🛒 Cart (<span id="cart-count">0</span>)
-</a>
+      🛒 Cart (<span id="cart-count">0</span>)
+    </a>
   </header>
 
   <!-- Banner Section -->
   <section id="banner">
-    <img src="images/banner.jpg" alt="Best Deals Banner">
+    <img src="images/banner.jpg" alt="Best Deals Banner" />
   </section>
 
   <!-- Filter Section -->
   <section id="filters">
-    <input type="text" id="search" placeholder="Search by name...">
+    <div style="position: relative;">
+      <input type="text" id="search" placeholder="Search by name..." autocomplete="off" />
+      <ul id="suggestions" class="suggestion-box"></ul>
+    </div>
     <label for="price-filter">Max Price: ₹<span id="price-value">50000</span></label>
-    <input type="range" id="price-filter" min="0" max="50000" step="1000" value="50000">
+    <input type="range" id="price-filter" min="0" max="50000" step="1000" value="50000" />
   </section>
 
+  <!-- Best Deals Section -->
+<!-- Best Deals Over Background Banner -->
+<section id="best-deals">
+  <h2>🔥 Best Deals</h2>
+  <div id="deal-list" class="product-grid"></div>
+</section>
+
+
+
   <!-- Products Section -->
-  <main id="product-list">
-    <!-- Product cards will be injected by script.js -->
+  <main id="product-list" class="product-grid">
+    <!-- Product cards injected via script -->
   </main>
+  <!-- Bottom Banner Section -->
+<section id="bottom-banner">
+  <img src="images/banner-bottom.png" alt="More Deals Coming Soon!">
+  <h2>More Deals Coming Soon!</h2>
+</section>
+
 
   <footer>
     <p>&copy; 2025 IG_Store. All rights reserved.</p>
   </footer>
 
-  <!-- JavaScript to load and display products -->
+  <!-- Script Section -->
   <script>
     const products = [
       {
@@ -44,14 +61,16 @@
         name: "ESP32-S3 1.8inch AMOLED SMARTWATCH",
         price: 4999,
         image: "images/product1.jpg",
-        page: "product1.html"
+        page: "product1.html",
+        deal: true
       },
       {
         id: 2,
         name: "Remote-Controlled Robotic Arm Kit",
         price: 2499,
         image: "images/product2.jpg",
-        page: "product2.html"
+        page: "product2.html",
+        deal: true
       },
       {
         id: 3,
@@ -65,7 +84,8 @@
         name: "Maglev : Magnetic Levitating Pen by BeCre8v",
         price: 399,
         image: "images/product4.jpg",
-        page: "product4.html"
+        page: "product4.html",
+        deal: true
       },
       {
         id: 5,
@@ -100,7 +120,6 @@
       const productList = document.getElementById("product-list");
       const search = document.getElementById("search").value.toLowerCase();
       const maxPrice = parseInt(document.getElementById("price-filter").value);
-
       productList.innerHTML = "";
 
       const filtered = products.filter(p =>
@@ -123,31 +142,64 @@
       }
     }
 
+    function displayBestDeals() {
+      const dealList = document.getElementById("deal-list");
+      const deals = products.filter(p => p.deal);
+      dealList.innerHTML = deals.map(d => `
+        <div class="product-card">
+          <a href="${d.page}">
+            <img src="${d.image}" alt="${d.name}">
+            <h3>${d.name}</h3>
+            <p>₹${d.price}</p>
+          </a>
+        </div>
+      `).join('');
+    }
+
     function addToCart(productId) {
       const product = products.find(p => p.id === productId);
       if (product) {
         cart.push(product);
         localStorage.setItem("cart", JSON.stringify(cart));
-
         updateCartCount();
         alert(`${product.name} added to cart!`);
       }
     }
 
-    // Event Listeners
-    document.getElementById("search").addEventListener("input", displayProducts);
-    document.getElementById("price-filter").addEventListener("input", () => {
-      document.getElementById("price-value").textContent =
-        document.getElementById("price-filter").value;
+    // Search Suggestions
+    document.getElementById("search").addEventListener("input", () => {
+      const value = document.getElementById("search").value.toLowerCase();
+      const suggestions = document.getElementById("suggestions");
+      suggestions.innerHTML = "";
+
+      if (value === "") return;
+
+      const matches = products.filter(p => p.name.toLowerCase().includes(value)).slice(0, 5);
+      matches.forEach(product => {
+        const li = document.createElement("li");
+        li.textContent = product.name;
+        li.onclick = () => {
+          document.getElementById("search").value = product.name;
+          suggestions.innerHTML = "";
+          displayProducts();
+        };
+        suggestions.appendChild(li);
+      });
+
       displayProducts();
     });
 
-    // Initial load
+    document.getElementById("price-filter").addEventListener("input", () => {
+      document.getElementById("price-value").textContent = document.getElementById("price-filter").value;
+      displayProducts();
+    });
+
     window.onload = function () {
+      cart = JSON.parse(localStorage.getItem("cart")) || [];
       updateCartCount();
+      displayBestDeals();
       displayProducts();
     };
   </script>
-
 </body>
 </html>

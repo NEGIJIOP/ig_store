@@ -131,3 +131,101 @@ footer {
   padding: 1rem;
   margin-top: 2rem;
 }
+/* Suggestion dropdown */
+.suggestion-box {
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  width: 100%;
+  max-width: 300px;
+  z-index: 1000;
+  list-style: none;
+  padding: 0;
+  margin-top: 0.25rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.suggestion-box li {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.suggestion-box li:hover {
+  background-color: #f2f2f2;
+}
+
+
+/* Product grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+/* Best deals section */
+#best-deals {
+  padding: 1rem 2rem;
+  background-color: #fefefe;
+}
+
+#best-deals h2 {
+  margin-bottom: 1rem;
+}
+/* Best Deals Banner Section */
+#best-deals {
+  background-color: #22538b;  /* Light clean background */
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+#best-deals h2 {
+  color: #ae3838;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+/* Responsive Tweaks */
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 1.3rem;
+  }
+
+  header .cart {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  #filters {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .product-card {
+  background-color: rgb(93, 152, 116);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .product-card h3 {
+    font-size: 1rem;
+  }
+
+  .product-card button {
+    padding: 0.4rem;
+    font-size: 0.8rem;
+  }
+
+/* Bottom Banner */
+#bottom-banner {
+  text-align: center;
+  padding: 2rem 0;
+  background: #448416;
+}
+
+#bottom-banner img {
+  width: 90%;
+  max-width: 1000px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+}
